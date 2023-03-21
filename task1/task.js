@@ -3,10 +3,11 @@ const newTooltip = document.createElement('div');
 newTooltip.setAttribute('class', 'tooltip');
 
 function showTooltip(tip) {
-    let tipPosition = tip.getBoundingClientRect();
-    newTooltip.innerText = tip.title;
-    newTooltip.style.bottom = `${tipPosition.height-tipPosition.y}px`;
-    newTooltip.classList.add('tooltip_active');
+	newTooltip.innerText = tip.title;
+	let tipPosition = tip.getBoundingClientRect();
+	newTooltip.style.left = tip.offsetLeft + 'px';
+	newTooltip.style.top = (tipPosition.y+tip.offsetHeight) + 'px';
+	newTooltip.classList.add('tooltip_active');
 }
 
 [...hasTooltip].forEach((e) => {
