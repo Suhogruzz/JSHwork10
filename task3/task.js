@@ -1,11 +1,10 @@
 const products = document.getElementsByClassName('product');
 
-for (const product of products){
-	//назначаем обработчики на изменение количества данного продукта
-	const decQuantity = product.getElementsByClassName('product__quantity-controls')[0].firstElementChild;
-	const quantity = decQuantity.nextElementSibling;
-	const incQuantity = decQuantity.nextElementSibling.nextElementSibling;
-	decQuantity.onclick = () => {
+[...products].forEach(product => {
+	let quantityControl = product.getElementsByClassName('product__quantity-controls')[0].firstElementChild;
+	let quantity = quantityControl.nextElementSibling;
+	let incQuantity = quantityControl.nextElementSibling.nextElementSibling;
+	quantityControl.onclick = () => {
 		let q = Number(quantity.innerText);
 		if (q > 1){
 			quantity.innerText = q - 1;
@@ -16,29 +15,29 @@ for (const product of products){
 		quantity.innerText = q + 1;
 	}
 	
-	const productAdd = product.getElementsByClassName('product__add')[0];
+	let productAdd = product.getElementsByClassName('product__add')[0];
 	
 	productAdd.onclick = () => {
-		const picture = product.getElementsByClassName('product__image')[0].getAttribute('src');
-		const id = product.dataset.id;
-		const cart = document.getElementsByClassName('cart__products')[0];
-		const cartProducts = Array.from(cart.getElementsByClassName('cart__product'));
+		let image = product.getElementsByClassName('product__image')[0].getAttribute('src');
+		let id = product.dataset.id;
+		let cart = document.getElementsByClassName('cart__products')[0];
+		let cartProducts = [...cart.getElementsByClassName('cart__product')];
 		
 		
-		let quantityTotal = Number(quantity.innerText);
-		const isExists = cartProducts.find(item => item.dataset.id == product.dataset.id);
-		if (isExists != undefined){
-			isExists.lastElementChild.innerText = quantityTotal + Number(isExists.lastElementChild.innerText);
+		let Total = Number(quantity.innerText);
+		let Exists = cartProducts.find(item => item.dataset.id == product.dataset.id);
+		if (Exists != undefined){
+			Exists.lastElementChild.innerText = Total + Number(Exists.lastElementChild.innerText);
 			return true;
 		}
 		
-		const html = `
+		let template = `
 			<div class="cart__product" data-id="${id}">
-			    <img class="cart__product-image" src="${picture}">
-			    <div class="cart__product-count">${quantityTotal}</div>
+			    <img class="cart__product-image" src="${image}">
+			    <div class="cart__product-count">${Total}</div>
 			</div>		
 		`;
 			    
-		cart.insertAdjacentHTML('beforeend', html);
+		cart.insertAdjacentHTML('beforeend', template);
 	}
-}
+})
