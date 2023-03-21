@@ -2,8 +2,7 @@ const taskInput = document.getElementById('task__input');
 const taskAdd = document.getElementById('tasks__add');
 const taskList = document.getElementById('tasks__list');
 
-
-taskAdd.onclick = () => {
+function createTask() {
     if (taskInput.value.trim().length == 0) {
         return false;
     }
@@ -24,6 +23,10 @@ taskAdd.onclick = () => {
     }
 
     return false;
-
 }
-
+taskAdd.onclick = createTask;
+taskAdd.onkeyup = (key) => {
+    if (key == 'Enter') {
+        createTask();
+    }
+}
